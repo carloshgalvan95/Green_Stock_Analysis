@@ -1,7 +1,7 @@
 # Securing a green future in Stocks
 
 ## Overview of the project
-
+---
 Steve’s parents are passionate about green energies, they believe that, as fossil fuels get used up, there will be more and more reliance on alternative energy production. However, Steve’s parents haven’t done much research and have instead decided to invest all their money into DAQO New Energy Corporation a company that makes silicon wafers for solar panels. Steve is concerned about diversifying their funds. He wants to analyze a handful of green energy stocks in addition to DAQO stock.
 
 The main purpose of this analysis is to have more information and a point of comparison to base the decision of which company or companies to invest in on more than just a guess. We will be comparing eleven green energy companies based on three main indicators.
@@ -38,10 +38,195 @@ This is the first row of our 2017 dataset, and just to sum things up, we are goi
 **Volume(H,2)** finally the volume column gives us the volume of transactions for every company in every row of the dataset, amount that we will need to be able to sum and store.
 
 ### Turning words into actions
+---
+Now, let’s brainstorm, what do we need to achieve all of that? Let’s break it down into questions:
 
-Now, how do we do this? First, we will define two variables to be able to evaluate how good our code actually works and how effective it is on reducing our run times, data can get quite extensive before we even realize, then we will be asking what year the user wants to run the analysis for:
+#### What data will we be analyzing?
+
+Simple enough, We will be working with the spreadsheets for both 2018, and 2017, for every Ticker (company) and to be able to store those 3 data points in a table for visualization.
+
+That means we need:
+
+1.  The year to run the analysis macro in
+2.  The tickers (company) that we will be analyzing
+3.  Create a table to output the final 3 data points established
+
+And two other variables, we want to also be able to evaluate how efficient our macro code is, so let’s define how long it takes to run it:
+
+4.  Define a variable to store the start time
+5.  Define a variable to store the end time
+
 ```
+
+Sub AllStocksAnalysisRefactored()
+
 Dim startTime As Single
-Dim endTime  As Single
+Dim endTime As Single
+
 yearValue = InputBox("What year would you like to run the analysis on?")
+
+startTime = Timer
+
+'Format the output sheet on All Stocks Analysis worksheet
+
+Worksheets("All Stocks Analysis").Activate
+Range("A1").Value = "All Stocks (" + yearValue + ")"
+
+'Create a header row
+
+Cells(3, 1).Value = "Ticker"
+Cells(3, 2).Value = "Total Daily Volume"
+Cells(3, 3).Value = "Return"
+
+'Initialize array of all tickers
+
+Dim tickers(12) As String
+tickers(0) = "AY"
+tickers(1) = "CSIQ"
+tickers(2) = "DQ"
+tickers(3) = "ENPH"
+tickers(4) = "FSLR"
+tickers(5) = "HASI"
+tickers(6) = "JKS"
+tickers(7) = "RUN"
+tickers(8) = "SEDG"
+tickers(9) = "SPWR"
+tickers(10) = "TERP"
+tickers(11) = "VSLR"
+
 ```
+
+#### What do we need the macro to achieve?
+
+We need to be able to retrieve 3 data points for every ticker, we previously defined what those 3 are, so we are going to a use for loops to verify, for every row of the dataset which value corresponds to what ticket and be able to store and sum that volume into a defined variable, we will use the array of all the tickers to loop through all the tickers for every row.
+
+Then, to get the starting and ending price we will verify if the row we are currently evaluated is the first or the last row of information for every ticker and store that data.
+
+```
+
+'Get the number of rows to loop over
+
+RowCount = Cells(Rows.Count, "A").End(xlUp).Row
+
+'1a) Create a ticker Index
+
+Dim tickerIndex As Single
+
+tickerIndex = 0
+
+'1b) Create three output arrays
+
+Dim tickerVolumes(12) As Long
+Dim tickerStartingPrice(12) As Single
+Dim tickerEndingPrice(12) As Single
+
+''2a) Create a for loop to initialize the tickerVolumes to zero.
+
+For i = 0 To 11
+
+  tickerVolumes(i) = 0
+
+Next i
+
+''2b) Loop over all the rows in the spreadsheet.
+
+For i = 2 To RowCount
+
+    '3a) Increase volume for current ticker
+
+    tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+
+    '3b) Check if the current row is the first row with the selected tickerIndex.
+
+    If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i, 1).Value \<\> Cells(i - 1, 1).Value Then
+
+        tickerStartingPrice(tickerIndex) = Cells(i, 6).Value
+
+    End If
+
+    '3c) check if the current row is the last row with the selected ticker
+
+    'If the next row's ticker doesnt match, increase the tickerIndex.
+
+    If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i, 1).Value \<\> Cells(i + 1, 1).Value Then
+
+        tickerEndingPrice(tickerIndex) = Cells(i, 6).Value
+
+        '3d Increase the tickerIndex.
+
+        tickerIndex = tickerIndex + 1
+
+    End If
+
+Next i
+
+```
+
+Already having those 3 data points, the only thing left is just doing math
+
+```
+
+'4) Loop through your arrays to output the Ticker, Total Daily Volume, and Return.
+
+For i = 0 To 11
+
+    Worksheets("All Stocks Analysis").Activate
+
+    Cells(i + 4, 1).Value = tickers(i)
+
+    Cells(i + 4, 2).Value = tickerVolumes(i)
+
+    Cells(i + 4, 3).Value = tickerEndingPrice(i) / tickerStartingPrice(i) - 1
+
+Next i
+
+```
+
+Formating the output table
+
+```
+
+'Formatting
+
+Worksheets("All Stocks Analysis").Activate
+
+Range("A3:C3").Font.FontStyle = "Bold"
+Range("A3:C3").Borders(xlEdgeBottom).LineStyle = xlContinuous
+Range("B4:B15").NumberFormat = "\#,\#\#0"
+Range("C4:C15").NumberFormat = "0.0%"
+Columns("B").AutoFit
+
+```
+
+And for better visualization, applying conditional formatting through the macro
+
+```
+
+dataRowStart = 4
+dataRowEnd = 15
+
+For i = dataRowStart To dataRowEnd
+
+    If Cells(i, 3) \> 0 Then
+
+        Cells(i, 3).Interior.Color = vbGreen
+
+    Else
+
+        Cells(i, 3).Interior.Color = vbRed
+
+    End If
+
+Next i
+
+```
+
+We end up the macro by getting our end timer run time and inputting in a message box to be able to actually see how it performed in terms of code efficiency.
+
+```
+
+endTime = Timer
+MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
+
+```
+
