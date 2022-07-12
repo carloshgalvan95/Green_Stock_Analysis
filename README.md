@@ -19,7 +19,7 @@ The same idea applies to our stock value if the total daily volume of trades inc
 
 Our two other our two other data points are quite simple to define, the **stock value starting price** and the **ending price**, with this three data points we can get a general idea of how every company performed throughout the years that we will be using as our points of reference. For now, those years are going to be **2017** and **2018**.
 
-## VBA as a powerful stock analysis tool
+### VBA as a powerful stock analysis tool
 
 For this project we will be using Visual Basic for applications in Excel, to automate the process and ensure the analysis can be done in the future, as our predictions will vary quite a lot in a field as volatile as the stock market. We will program a macro that allows us to run over all the rows of information that we have to obtain and compare in a final table each of the eleven prospect companies to invest in.
 
@@ -229,4 +229,19 @@ endTime = Timer
 MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
 
 ```
+### Analyzing our results
+
+After running our analysis for 2017 and 2018, we get this results:
+2017                       |  2018
+:-------------------------:|:-------------------------:
+![2017_Table](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/2017_table.png)  |  ![2018_Table](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/2018_table.png)
+
+First let’s evaluate our first column here, **Total Daily Volume**, this will tell us, how accurate the return we are getting actually is for future years. An easier way to visualize this, given that we don’t really have a set amount minimum of total daily volume to consider the return within our desired ranges of accuracy, would be using a treemap.
+
+2017                       |  2018
+:-------------------------:|:-------------------------:
+![DailyVolume2017_Treemap](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/DailyVolume2017_Treemap.png)  |  ![DailyVolume2018_Treemap](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/DailyVolume2018_Treemap.png)
+
+Based on this information, we see that, for **2017** We could trust that the accuracy of the return could be better for subsequent years for **SPWR** and **FSLR** tickers and **ENPH**, **SPWR**, **RUN** and **FSLR** for **2018**.
+
 
