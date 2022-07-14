@@ -37,11 +37,11 @@ This is the first row of our 2017 dataset, and just to sum things up, we are goi
 
 **Volume(H,2)** finally the volume column gives us the volume of transactions for every company in every row of the dataset, amount that we will need to be able to sum and store.
 
-### Turning words into actions
+## Turning words into actions
 ---
 Now, let’s brainstorm, what do we need to achieve all of that? Let’s break it down into questions:
 
-#### What data will we be analyzing?
+### What data will we be analyzing?
 
 Simple enough, We will be working with the spreadsheets for both 2018, and 2017, for every Ticker (company) and to be able to store those 3 data points in a table for visualization.
 
@@ -96,7 +96,7 @@ tickers(11) = "VSLR"
 
 ```
 
-#### What do we need the macro to achieve?
+### What do we need the macro to achieve?
 
 We need to be able to retrieve 3 data points for every ticker, we previously defined what those 3 are, so we are going to a use for loops to verify, for every row of the dataset which value corresponds to what ticket and be able to store and sum that volume into a defined variable, we will use the array of all the tickers to loop through all the tickers for every row.
 
@@ -229,8 +229,8 @@ endTime = Timer
 MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
 
 ```
-### Analyzing our results
-
+## Analyzing our results
+---
 After running our analysis for 2017 and 2018, we get this results:
 2017                       |  2018
 :-------------------------:|:-------------------------:
@@ -242,7 +242,7 @@ First let’s evaluate our first column here, **Total Daily Volume**, this will 
 :-------------------------:|:-------------------------:
 ![DailyVolume2017_Treemap](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/DailyVolume2017_Treemap.png)  |  ![DailyVolume2018_Treemap](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/DailyVolume2018_Treemap.png)
 
-#### Finding order within chaos
+### Finding order within chaos
 
 Based on this information, we see that, for 2017 We could trust that the accuracy of the return could be better for subsequent years for SPWR and FSLR tickers and ENPH, SPWR, RUN and FSLR for 2018.
 
@@ -257,7 +257,7 @@ If we assume that the best case scenario to evaluate the return percentage would
 
 There is a pretty even distribution of the total volume percentage for all of our four possible tickers during 2018 so we are going to base our choice mainly using the total volume percentage of trades during 2017. What we can observe is that our safest two possible choices are **FSLR** and **SPWR**.
 
-#### Staying green and accurate
+### Staying green and accurate
 
 For the future of the world, and Steve’s parents… the best road to take is staying on the greens. Considering accuracy and return, we would try make the safest best with the biggest possible return percentage of our investment.
 
