@@ -275,3 +275,41 @@ Based on this table we can clearly see that within our two possible investment o
 
 But our options doesn’t end there, a second scenario and probably the better one if we have the necessary amount to invest and risk a little bit more would be to diversify our investment and go for both our safest bet and our biggest possible return investment, **FSLR** and **ENPH**.
 
+The reason for doing that is to try to be prepared for the volatility of the stock market, the lower the daily volume of trades a company has, the more impactful any of those trades is going to be, the change in return percentage is going to be bigger. If we define a rate between trades for each percentual point of return, it will be possible to analyze how “safe” it would be to invest our money in that company.
+
+| **Ticker** | **Trades per percent rate** |
+|------------|-----------------------------|
+| SPWR       |  14,021,829                 |
+| FSLR       |  12,344,619                 |
+| ENPH       |  8,807,333                  |
+| RUN        |  8,182,747                  |
+
+For example, for **FSLR**, we saw a 1% increase in return for every 12,344,619 trades. This would then be our safest option with a positive return.
+
+## There will always be room for improvement
+---
+We already verified that our macro operates properly, and we already saw the benefits that we got from it. But ver1.0 is never going to be the final one, if we want to continue our improvement there are some major changes that can be done. What works now could cause us problems in the future when our datasets get bigger, and our tickers and rows increase.
+
+### If it’s working, don’t fix it right?
+
+This is especially false when we are dealing with code, if we want to ensure that our code is going to properly perform in the most versatile way. We always have to be on the lookout of any room for improvement.
+
+One of the disadvantages and something that can also be and needs to be avoided is refactoring that either we haven’t seen in quite a while or that was originally coded by someone else. It’s especially important when working in teams to be sure that readability, syntax and structure and common coding etiquette is followed.
+
+1.  DRY: Don’t Repeat Yourself.
+2.  Avoid using hard-coded values aka Magic Numbers.
+3.  Identify patterns, avoid using anti-patterns, common responses to problems that may be ineffective, too specialized or counterproductive or kludges.
+4.  If you did your research online, it’s useful to comment on where you actually got it.
+
+And of course the advantages of refactoring code are that you can optimize the performance, versatility and limits of your code and even reduce the runtimes.
+
+### All_Stocks_AnalysisVer2.0
+| All_Stocks_Analysis1.0 | All_Stocks_Analysis2.0 |
+|------------------------|------------------------|
+|           ![2017_runtime1.0](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/2017_original_runtime.png)             |               ![2017_runtime2.0](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/2017_challenge_runtime.png)         |
+|           ![2018_runtime1.0](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/2018_original_runtime.png)             |             ![2018_runtime2.0](https://github.com/carloshgalvan95/stock-analysis/blob/main/Resources/2018_challenge_runtime.png)           |
+
+When refactoring our code we introduced the use of arrays to organize and store the data for each data point and ticker reducing the runtime of our code. Even if the difference may not be quite as perceptible now, when dealing with bigger data sets the most probable thing still is that our code is going to start malfunctioning, by refactoring it we increase the versatility and reach of our possible future analysis.
+
+The cons are that sometimes, even when you know what you are achieving you can get lost in the sea of possibilities. *Wait, what did that For loop actually accomplished? , why the array is defined as (12)?* Yes those are some questions I actually asked myself when refactoring the code. Most of the times refactoring a code means increasing the amount of complexity of the tools used to deal with the problem you are trying to solve or what you are actually trying to achieve with it, and as previously mentioned there’s always going to be room for improvement, the future you is probably going to know how to deal with this dataset in way more efficient ways than All_Stocks_AnalysisVer2.0 was ever capable of.
+
